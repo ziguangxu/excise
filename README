@@ -7,11 +7,11 @@ How to use the application:
 
 Play around remotely:
 create message
-curl -d '{"username":"<yourusername>","content":"<yourcontent>","timeout":<yourtimeout>}' -H 'Content-Type: application/json' http://b91899f4.ngrok.io/chat
+curl -d '{"username":"<yourusername>","content":"<yourcontent>","timeout":<yourtimeout>}' -H 'Content-Type: application/json' http://9ad50df1.ngrok.io/chat
 retrieve by id
-curl http://b91899f4.ngrok.io/chat/<yourid>
+curl http://9ad50df1.ngrok.io/chat/<yourid>
 retrieve by username
-curl http://b91899f4.ngrok.io/chats/<yourusername>
+curl http://9ad50df1.ngrok.io/chats/<yourusername>
 
 
 OR run the application on your local machine:
@@ -39,7 +39,7 @@ mysql> exit;
 6. enter the application root dir and run the application
 cd your/path/to/excise
 activator
-run -DapplyEvolutions.default=true
+run 8000 -DapplyEvolutions.default=true
 
 7. play around
 create message:
