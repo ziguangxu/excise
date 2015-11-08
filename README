@@ -2,3 +2,60 @@ This is your new Play application
 =================================
 
 This file will be packaged with your application, when using `activator dist`.
+
+How to use the application:
+
+Play around remotely:
+create message
+curl -d '{"username":"<yourusername>","content":"<yourcontent>","timeout":<yourtimeout>}' -H 'Content-Type: application/json' http://b91899f4.ngrok.io/chat
+retrieve by id
+curl http://b91899f4.ngrok.io/chat/<yourid>
+retrieve by username
+curl http://b91899f4.ngrok.io/chats/<yourusername>
+
+
+OR run the application on your local machine:
+1. install play
+Follow the instruction on https://www.playframework.com/documentation/2.4.x/Installing
+
+2. install mysql
+Download the pre-compiled DMG: http://dev.mysql.com/downloads/mysql/ and install it
+
+3. set up mysql environment variables
+For MAC: Add 'export PATH=${PATH}:/usr/local/mysql/bin/' to your ~/.bash_profile
+For Windows: follow https://dev.mysql.com/doc/mysql-windows-excerpt/5.1/en/mysql-installation-windows-path.html
+
+4. start mysql server
+For MAC: run 'sudo /usr/local/mysql/support-files/mysql.server start' in terminal
+For Windows: 
+
+5. create database "excise" and create default user for excise
+mysql -h localhost -u root -p
+mysql> CREATE DATABASE excise;
+mysql> CREATE USER 'excise'@'localhost';
+mysql> GRANT ALL PRIVILEGES ON excise.* TO 'excise'@'localhost';
+mysql> exit;
+
+6. enter the application root dir and run the application
+cd your/path/to/excise
+activator
+run -DapplyEvolutions.default=true
+
+7. play around
+create message:
+curl -d '{"username":"<yourusername>","content":"<yourcontent>","timeout":<yourtimeout>}' -H 'Content-Type: application/json' http://localhost:8000/chat
+retrieve message by id:
+curl http://localhost:8000/chat/<yourid>
+retrieve message by username:
+curl http://localhost:8000/chats/<yourusername>
+
+============================================================================
+
+Test Scenario(please find the test scenario image in the root dir):
+chat/ can create messages successfully and return the id of the new message with a success status
+chat/:id can return a message with given id. No matter whether the message is expired or not
+chats/:username can return all unexpired messages for given user, once the user received the message, it is expired
+So if you run chats/:username twice, the second time will return fail message
+
+
+

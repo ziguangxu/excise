@@ -34,7 +34,7 @@ class Application extends Controller with Loggable{
     log.debug("retrieve messages by username: " + username)
     val messages = Message.findForUsername(username).map(m => MessageForUsername(m.id.get, m.content))
     messages.size match {
-      case 0 => Ok(Json.obj("status" -> "failed", "error" -> "didn't find the message of the specific username"))
+      case 0 => Ok(Json.obj("status" -> "failed", "error" -> "didn't find the unexpired message of the specific username"))
       case _ => {
         Message.setExpired(messages.map(_.id))
         Ok(UsernameResponseFormat(messages).json)
